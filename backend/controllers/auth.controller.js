@@ -1,7 +1,8 @@
 const User =  require('../models/user.model')
 const bcrypt = require('bcrypt');
+const { errorhandler } = require('../utils/error');
 
-module.exports.signup=async (req,res)=>{
+module.exports.signup=async (req,res,next)=>{
 
     try{
  
@@ -16,7 +17,8 @@ module.exports.signup=async (req,res)=>{
     return res.status(201).json('user created successfully');
 
 }catch(err){
-    return res.status(500).json(err.message);
+  
+    next(err);
 }
 
 

@@ -11,10 +11,7 @@ mongoose.connect("mongodb+srv://mohityadav:kJUgEFqwrto0XUYW@realestatec.fupwuxe.
     console.log(`${err}`);
 })
 
-app.use(express.urlencoded({
-    extended:true,
-}));
-app.use(require('./routes/index'));
+
    
 
 
@@ -25,4 +22,23 @@ app.listen(3000,(err)=>{
     if(err){
         console.log(err);
     }
+})
+
+
+app.use(express.urlencoded({
+    extended:true,
+}));
+app.use(require('./routes/index'));
+
+
+
+
+app.use((err,req,res,next)=>{
+    const statusCode=err.statusCode||500;
+    const message=err.message||'Interval Server Error';
+    return res.status(statusCode).json({
+        success:false,
+        statusCode,
+        message,
+    })
 })
