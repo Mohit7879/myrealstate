@@ -4,13 +4,17 @@ const mongoose =require('mongoose');
 const dotenv=require('dotenv');
 dotenv.config();
 
-mongoose.connect("mongodb+srv://mohityadav:kJUgEFqwrto0XUYW@realestatec.fupwuxe.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://mohityadav:kJUgEFqwrto0XUYW@realestatec.fupwuxe.mongodb.net/realestate?retryWrites=true&w=majority")
 .then(()=> {
     console.log("App is now connected to DB")
 }).catch((err)=> {
     console.log(`${err}`);
 })
 
+app.use(express.urlencoded({
+    extended:true,
+}));
+app.use(require('./routes/index'));
    
 
 
