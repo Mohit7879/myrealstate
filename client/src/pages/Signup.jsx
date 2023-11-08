@@ -6,7 +6,7 @@ export default function Signup() {
   const [formData, SetFormData]=useState({});
   const [error, SetError]=useState(null);
   const [loading, SetLoading]=useState(false);
-  const [data, SetData]=useState('');
+ 
   const navigate=useNavigate();
 
   const handlechange=(e)=>{
