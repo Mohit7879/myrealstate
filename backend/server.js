@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose =require('mongoose');
-const cors = require('cors');
+
 const dotenv=require('dotenv');
 dotenv.config();
 
@@ -12,7 +12,7 @@ mongoose.connect("mongodb+srv://mohityadav:kJUgEFqwrto0XUYW@realestatec.fupwuxe.
     console.log(`${err}`);
 })
 
-app.use(cors());
+
 
    
 
@@ -35,7 +35,11 @@ app.use(express.json())
 app.use(require('./routes/index'));
 
 
-
+//This middleware is used to handle errors that occur in your application. 
+//When an error is encountered in a route or a previous middleware,
+// it can be passed to this middleware using next(err), 
+//and it will respond with the appropriate error status and message in a consistent JSON format.
+//next (a function to pass control to the next middleware).
 
 app.use((err,req,res,next)=>{
     const statusCode=err.statusCode||500;

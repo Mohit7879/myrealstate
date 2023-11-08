@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link , useNavigate} from "react-router-dom";
 
-export default function SignOut() {
+export default function Signup() {
 
   const [formData, SetFormData]=useState({});
   const [error, SetError]=useState(null);
@@ -21,6 +21,7 @@ export default function SignOut() {
 
   const handleSubmit=async(e)=>{
   e.preventDefault();
+  try{
   SetLoading(true);
   
     const res = await fetch('/api/auth/signup',{
@@ -44,7 +45,14 @@ export default function SignOut() {
     SetError(null)
     SetLoading(false);
     navigate('/signin')
-    SetData(data)
+   
+
+  }catch(err){
+
+    SetLoading(false);
+    SetError(err.message);
+
+  }
 
 
   }
@@ -64,7 +72,7 @@ export default function SignOut() {
           <Link to={"/signin"}><span className="text-blue-700">Sign in</span> </Link>
 
         </div>
-       { error?<h1 className="text-red-500  "> ERROR <p1>{error}</p1></h1>:<h1 className="text-white-500 bg-green-500 rounded-lg">{data}</h1>}
+       { error&&<h1 className="text-red-500  "> ERROR <p1>{error}</p1></h1>}
       </div>
     )
     }
