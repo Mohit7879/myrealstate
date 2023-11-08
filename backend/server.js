@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose =require('mongoose');
+const cors = require('cors');
 const dotenv=require('dotenv');
 dotenv.config();
 
@@ -11,6 +12,7 @@ mongoose.connect("mongodb+srv://mohityadav:kJUgEFqwrto0XUYW@realestatec.fupwuxe.
     console.log(`${err}`);
 })
 
+app.use(cors());
 
    
 
@@ -28,6 +30,8 @@ app.listen(3000,(err)=>{
 app.use(express.urlencoded({
     extended:true,
 }));
+
+app.use(express.json())
 app.use(require('./routes/index'));
 
 
