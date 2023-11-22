@@ -22,7 +22,7 @@ export default function Header() {
         <ul className="flex gap-4">
             <Link to='/'>  <li className="hover:underline"> Home</li></Link>
           <Link to='/about'>  <li  className="hover:underline">About</li></Link>
-          {currentUser?(<img src="" alt="profile"/>) :<Link to='/signin'><li  className="hover:underline">Sign in</li></Link>}
+          {currentUser?(<img  className="w-8 h-8 rounded-full "    src={currentUser.avatar} alt="profile"/>) :<Link to='/signin'><li  className="hover:underline">Sign in</li></Link>}
          
         </ul>
              </div>
