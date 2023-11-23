@@ -5,8 +5,9 @@ const jwt =require('jsonwebtoken');
 
 module.exports.verifyToken=(req,res,next)=>{
     try{
-const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1NWRlM2Q5YjIwYTkwOGI1MmJiZjc2OSIsImlhdCI6MTcwMDcxNjEzN30.0LaP2Gmv_JvJVmEZkY8fnEnCNGdDYjB4SqztNz6LslQ"
-console.log("token",token);
+      //  console.log(req.cookies.access_token);
+const token =req.cookies.access_token
+//console.log("token",token);
 if(!token){
     return next(errorhandler(401,'unauthorised'))
 }else{

@@ -4,7 +4,7 @@ const bcryptjs=require('bcryptjs')
 
   module.exports.updateUser=async (req,res,next)=>{
 
-    if(req.user.id!==req.params.id) return next(errorhandler(401,"you can update your account "));
+    if(req.user.id!==req.params.id) return next(errorhandler(401,"you can only update your account "));
     try {
          
         if(req.body.password){
@@ -31,6 +31,25 @@ const bcryptjs=require('bcryptjs')
     }
 
   
+    }
+
+
+    module.exports.deleteUser=async(req,res,next)=>{ 
+        if(req.user.id!==req.params.id) return next(errorhandler(401,"you can only delete your account "));
+          
+        try {
+
+           await User.findByIdAndDelete(req.params.id);
+           res.clearCookie('access_token');
+         return res.status(200).json('user deleted successfully')
+        } catch (error) {
+
+            next(error)
+            
+        }
+     
+
+
     }
 
 

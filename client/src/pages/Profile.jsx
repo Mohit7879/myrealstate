@@ -3,8 +3,10 @@ import { useSelector } from "react-redux";
 import { useRef } from "react";
 import {getStorage,ref, uploadBytesResumable,getDownloadURL} from 'firebase/storage'
 import { app } from "../firebase";
-import { updateUserStart,updateUserSuccess,updateUserFailure } from "../redux/user/userSlice";
+import { updateUserStart,updateUserSuccess,updateUserFailure,deleteUserSuccess,deleteUserFailure } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
+
+import { useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const {currentUser,loading , error}=useSelector(state=>state.user);
@@ -12,6 +14,7 @@ export default function Profile() {
   const fileRef=useRef(null);
   const [ file, setFile] = useState(undefined);
   const [formData, SetFormData]= useState({});
+  const Navigate=useNavigate();
 
   const dispatch=useDispatch();
 
@@ -88,6 +91,7 @@ export default function Profile() {
       }
 
      dispatch(updateUserSuccess(data))
+     Navigate('/')
    
       
       
@@ -95,6 +99,39 @@ export default function Profile() {
     } catch (error) {
 
       dispatch(updateUserFailure(error.message))
+      
+    }
+
+  }
+
+
+  const handleDeleteUser= async (e)=>{
+
+    try{
+     
+  
+      const res = await fetch(`/api/user/delete/${currentUser._id}`,{
+        method:'DELETE',
+        
+      });
+      const data = await res.json()
+      console.log(data);
+      
+      console.log(data.message);
+      if(data.success===false){
+       dispatch(deleteUserFailure(data.message))
+        return;
+      }
+
+     dispatch(deleteUserSuccess(data))
+     Navigate('/signup')
+   
+      
+      
+     
+    } catch (error) {
+
+      dispatch(deleteUserFailure(error.message))
       
     }
 
@@ -114,7 +151,7 @@ export default function Profile() {
         <button disabled={loading} className="bg-slate-700 text-white rounded-lg p-2 hover:bg-slate-600">{loading?'loading...':'Update'}</button>
       </form>
       <div className="flex justify-between p-3">
-      <span className="text-red-700 cursor-pointer">Delete account</span>
+      <button className="text-red-700 cursor-pointer" onClick={handleDeleteUser} >Delete User</button>
     <span className="text-red-700 cursor-pointer">Sign Out</span>
       </div>
       { error&&<h1 className="text-red-500  "> ERROR <p1>{error}</p1></h1>}
