@@ -6,7 +6,7 @@ import { app } from "../firebase";
 import { updateUserStart,updateUserSuccess,updateUserFailure,deleteUserSuccess,deleteUserFailure , signoutSuccess,signoutFailure } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const {currentUser,loading , error}=useSelector(state=>state.user);
@@ -160,7 +160,7 @@ export default function Profile() {
   
     return (
     
-    <div className="p-5 max-w-lg mx-auto">
+    <div className="p-5 max-w-lg mx-auto flex flex-col gap-3">
       <form  onSubmit={handleupdateUser} className="flex flex-col gap-3">
         <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
         <input onChange={(e)=>setFile(e.target.files[0])} type="file" ref={fileRef} hidden accept="image/*"></input>
@@ -170,9 +170,11 @@ export default function Profile() {
         <input onChange={handleChange} defaultValue={currentUser.password} className="border p-3 rounded-lg" type="text" placeholder="password" id="password"></input>
         <button disabled={loading} className="bg-slate-700 text-white rounded-lg p-2 hover:bg-slate-600">{loading?'loading...':'Update'}</button>
       </form>
+      <Link  to={'/listing'} className="bg-green-700 text-center text-white rounded-lg p-2 hover:bg-slate-600"  > Create listing </Link>
       <div className="flex justify-between p-3">
       <button className="text-red-700 cursor-pointer" onClick={handleDeleteUser} >Delete User</button>
     <button onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign Out</button>
+   
       </div>
       { error&&<h1 className="text-red-500  "> ERROR <p1>{error}</p1></h1>}
 
