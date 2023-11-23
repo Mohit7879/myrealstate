@@ -4,6 +4,7 @@ import Oauth from "../components/oauth";
 import { useDispatch, useSelector } from "react-redux";
 import { signinStart,signInSuccess,signInFailure } from "../redux/user/userSlice";
 
+
 export default function Signin() {
 
 const [formData, SetFormData]=useState({});
@@ -40,6 +41,8 @@ const [formData, SetFormData]=useState({});
 
     });
     const data = await res.json()
+    console.log(data);
+    
     console.log(data.message);
     if(data.success===false){
      dispatch(signInFailure(data.message))

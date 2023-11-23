@@ -1,6 +1,7 @@
-const { test, test1 } = require('../controllers/user.controller.js');
+const { test1, updateUser } = require('../controllers/user.controller.js');
+const { verifyToken } = require('../utils/verifyToken.js');
 const router=require('express').Router();
 
-router.get('/test',test);
-router.get('/test1',test1);
+router.post('/update/:id',verifyToken,updateUser);
+//router.get('/test1',test1);
 module.exports=router;

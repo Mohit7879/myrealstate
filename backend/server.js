@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose =require('mongoose');
+const cookieparser = require('cookie-parser');
 
 const dotenv=require('dotenv');
 dotenv.config();
@@ -12,6 +13,7 @@ mongoose.connect("mongodb+srv://mohityadav:kJUgEFqwrto0XUYW@realestatec.fupwuxe.
     console.log(`${err}`);
 })
 
+app.use(cookieparser());
 
 
    
@@ -32,6 +34,7 @@ app.use(express.urlencoded({
 }));
 
 app.use(express.json())
+
 app.use(require('./routes/index'));
 
 
@@ -44,6 +47,7 @@ app.use(require('./routes/index'));
 app.use((err,req,res,next)=>{
     const statusCode=err.statusCode||500;
     const message=err.message||'Interval Server Error';
+    console.log(message);
     return res.status(statusCode).json({
         success:false,
         statusCode,

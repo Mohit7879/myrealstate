@@ -4,8 +4,12 @@ import {  persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 import persistStore from 'redux-persist/lib/persistStore'
 
-
+// combine reducer function
 const rootReducer=combineReducers({user:userReducer})
+
+
+//  store settlement
+
 const PersistConfig={
     key:'root',
     storage,
