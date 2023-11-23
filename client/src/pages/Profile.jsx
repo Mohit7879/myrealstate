@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useRef } from "react";
 import {getStorage,ref, uploadBytesResumable,getDownloadURL} from 'firebase/storage'
 import { app } from "../firebase";
-import { updateUserStart,updateUserSuccess,updateUserFailure,deleteUserSuccess,deleteUserFailure } from "../redux/user/userSlice";
+import { updateUserStart,updateUserSuccess,updateUserFailure,deleteUserSuccess,deleteUserFailure , signoutSuccess,signoutFailure } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
@@ -137,6 +137,26 @@ export default function Profile() {
 
   }
 
+  const handleSignOut= async (e)=>{
+    try {
+          console.log(('inside signout'));
+        const res= await fetch(`/api/auth/signout`);
+        const data= await res.json();
+        console.log(data);
+
+        if(data.success===false){
+          dispatch(signoutFailure(data.message))
+        }
+
+        dispatch(signoutSuccess(data));
+       
+
+      
+    } catch (error) {
+       dispatch(signoutFailure(error.message))
+    }
+  }
+
   
     return (
     
@@ -152,7 +172,7 @@ export default function Profile() {
       </form>
       <div className="flex justify-between p-3">
       <button className="text-red-700 cursor-pointer" onClick={handleDeleteUser} >Delete User</button>
-    <span className="text-red-700 cursor-pointer">Sign Out</span>
+    <button onClick={handleSignOut} className="text-red-700 cursor-pointer">Sign Out</button>
       </div>
       { error&&<h1 className="text-red-500  "> ERROR <p1>{error}</p1></h1>}
 

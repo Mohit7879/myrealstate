@@ -45,3 +45,11 @@ module.exports.signin = async (req,res,next)=>{
 
 
 }
+
+module.exports.signOut= (req,res,next)=>{
+     
+    res.clearCookie('access_token');
+    res.status(200).json('sign out success');
+    return ;
+
+}
