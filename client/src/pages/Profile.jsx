@@ -180,7 +180,24 @@ export default function Profile() {
       
     }
   }
+    
+  const handledeletelisting = async(id)=>{
+            console.log("inside delete");
+    try {
+      const res = await  fetch(`/api/listing/deletelist/${id}`,{
+        method:'DELETE'})
 
+      const data= await  res.json();
+      
+
+      setshowlisting((prev)=>prev.filter((list)=>list._id!==id))
+    
+      
+    } catch (error) {
+        console.log(error);
+    }
+
+  }
   
     return (
     
@@ -205,19 +222,20 @@ export default function Profile() {
      {showListingError?<p>show listing error</p>:''}
      <button onClick={handleShowListings} className="text-green-700 cursor-pointer"> Show Listing</button>
       <h1 className="text-center mt-7 font-semibold text-2xl ">Listings</h1>
-      {showlisting&&showlisting.length>1&&
+      {showlisting&&showlisting.length&&
       
       showlisting.map((list)=>(
         <div className="flex  justify-between items-center  border gap-7 p-3">
-         
+              <div>
               <Link  to={`/getlisting/${list._id}`}> <img className="h-16 w-16 object-contain " src={list.imageurls[0]} alt="image" /></Link>
               <Link key={list._id} className=" text-slate-700 flex justify-center truncate hover:underline flex-1 "> {list.name}</Link>
-            <div>
-            <button className="text-red-700">Delete</button>
-           
-            </div>
-        </div>
+              </div>
+            
+              <button type="button" onClick={()=>(handledeletelisting(list._id))}className="text-red-700">Delete</button>
           
+        </div>
+     
+         
       ))}
      
     </div>
