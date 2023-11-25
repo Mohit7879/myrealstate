@@ -1,6 +1,8 @@
 const { errorhandler } = require("../utils/error")
 const User= require('../models/user.model.js')
-const bcryptjs=require('bcryptjs')
+const bcryptjs=require('bcryptjs');
+const Listing = require("../models/listing.model.js");
+
 
   module.exports.updateUser=async (req,res,next)=>{
 
@@ -51,5 +53,23 @@ const bcryptjs=require('bcryptjs')
 
 
     }
+
+
+    module.exports.getuserlisting=async (req,res,next)=>{
+
+        try{
+        if(req.user.id!==req.params.id){
+                 return next(errorhandler(401,"you can view your own listing"))
+        }else{
+
+            const listings=await Listing.find({userRef:req.params.id})
+            return res.status(200).json(listings);
+
+        }
+    }
+    catch(err){
+        next(err)
+    }
+}
 
 
