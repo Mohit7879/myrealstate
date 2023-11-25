@@ -60,14 +60,14 @@ offer:{
     required:true,
 },
 
-imageUrls:{
+imageurls:{
 
     type:Array,
-    required:true,
+    required:true
 
 },
 
-useRef:{
+userRef:{
     type:String,
     required:true,
 }
