@@ -10,10 +10,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 export default function Profile() {
   const {currentUser,loading , error}=useSelector(state=>state.user);
-  console.log(currentUser);
+ 
   const fileRef=useRef(null);
   const [ file, setFile] = useState(undefined);
   const [formData, SetFormData]= useState({});
+  const [showListingError,setshowListingError]=useState(null)
+  const [ showlisting,setshowlisting]=useState([]);
   const Navigate=useNavigate();
 
   const dispatch=useDispatch();
@@ -157,6 +159,28 @@ export default function Profile() {
     }
   }
 
+
+  const handleShowListings= async ()=>{
+    try {
+           setshowListingError(false);
+      const res= await fetch(`/api/user/getlisting/${currentUser._id}`)
+     
+      const data= await res.json()
+      setshowlisting(data);
+      console.log(showlisting.map((list)=>{
+        return list.imageurls[0]
+      }));
+      if(data.success==false){
+        setshowListingError(true)
+        return
+      }
+      
+    } catch (error) {
+          setshowListingError(true)
+      
+    }
+  }
+
   
     return (
     
@@ -178,7 +202,24 @@ export default function Profile() {
       </div>
       { error&&<h1 className="text-red-500  "> ERROR <p1>{error}</p1></h1>}
 
+     {showListingError?<p>show listing error</p>:''}
+     <button onClick={handleShowListings} className="text-green-700 cursor-pointer"> Show Listing</button>
+      <h1 className="text-center mt-7 font-semibold text-2xl ">Listings</h1>
+      {showlisting&&showlisting.length>1&&
       
+      showlisting.map((list)=>(
+        <div className="flex  justify-between items-center  border gap-7 p-3">
+         
+              <Link  to={`/getlisting/${list._id}`}> <img className="h-16 w-16 object-contain " src={list.imageurls[0]} alt="image" /></Link>
+              <Link key={list._id} className=" text-slate-700 flex justify-center truncate hover:underline flex-1 "> {list.name}</Link>
+            <div>
+            <button className="text-red-700">Delete</button>
+           
+            </div>
+        </div>
+          
+      ))}
+     
     </div>
   
     
