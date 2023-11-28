@@ -1,22 +1,33 @@
 import {FaSearch} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import {  useDispatch,useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { setsearch } from "../redux/search/searchSlice.js";
+
 
 
 export default function Header() {
-  const {currentUser} = useSelector(state=>state.user);
+  const {currentUser}= useSelector((state)=>state.user);
+
+  const navigate=useNavigate()
+  const dispatch=useDispatch();
+ 
   const [ searchTerm,setsearchTerm] = useState('');
-  const navigate=useNavigate();
+
   const handleSubmit=(e)=>{
+    
    
     e.preventDefault();
+  
+  
     if(searchTerm){
     
       const urlparams= new URLSearchParams(window.location.search);
       urlparams.set('searchTerm',searchTerm);
+      console.log(searchTerm);
+     dispatch(setsearch(searchTerm))
       const searchQuery=urlparams.toString();
-      console.log(searchQuery);
+    
       navigate(`/search?${searchQuery}`);
     }
   }

@@ -6,7 +6,9 @@ const initialState={
     loading:false,
     
 }
-
+const searchTerm={
+    searchTerm:""
+}
 
 const userSlice = createSlice(
     {
