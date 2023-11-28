@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRef } from "react";
-import {getStorage,ref, uploadBytesResumable,getDownloadURL} from 'firebase/storage'
+
+import {getStorage,ref, getDownloadURL, uploadBytesResumable} from 'firebase/storage'
 import { app } from "../firebase";
 import { updateUserStart,updateUserSuccess,updateUserFailure,deleteUserSuccess,deleteUserFailure , signoutSuccess,signoutFailure } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
@@ -16,6 +17,7 @@ export default function Profile() {
   const [formData, SetFormData]= useState({});
   const [showListingError,setshowListingError]=useState(null)
   const [ showlisting,setshowlisting]=useState([]);
+  const [image, setimage]=useState('');
   const Navigate=useNavigate();
 
   const dispatch=useDispatch();
@@ -30,12 +32,13 @@ export default function Profile() {
  
   const [progressper,setProgress]=useState(0);
   const handleFileUpload = () => {
-    
+          console.log('inside uim');
       console.log(file);
-      const storage=getStorage(app)
+       const storage=getStorage(app);
       const fileName= new Date().getTime()+file.name;
-      const storageRef = ref(storage,fileName);
-      const uploadTask = uploadBytesResumable(storageRef,fileName);
+      console.log(fileName);
+      const storageRef = ref(storage,`image/${fileName}`);
+       const uploadTask= uploadBytesResumable(storageRef,file);
   
       uploadTask.on(
          'state_changed',
@@ -52,6 +55,7 @@ export default function Profile() {
      
        // Upload complete
           getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+            setimage(url)
             SetFormData({...formData,avatar:url})
             console.log(formData);
             console.log( url)
@@ -196,8 +200,9 @@ export default function Profile() {
     } catch (error) {
         console.log(error);
     }
-
+             
   }
+  
   
     return (
     

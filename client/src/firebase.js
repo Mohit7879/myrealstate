@@ -1,22 +1,20 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import getStorage from "redux-persist/es/storage/getStorage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey:import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: "mern-estate-ae732.firebaseapp.com",
-  projectId: "mern-estate-ae732",
-  storageBucket: "mern-estate-ae732.appspot.com",
-  messagingSenderId: "708065259716",
-  appId: "1:708065259716:web:41d601417ce51d0d8d1991"
+  apiKey: "AIzaSyDuGWXIxZ4i031eKJso48XXg8-fnxft-Qs",
+  authDomain: "realestate-d124d.firebaseapp.com",
+  projectId: "realestate-d124d",
+  storageBucket: "realestate-d124d.appspot.com",
+  messagingSenderId: "1050502617728",
+  appId: "1:1050502617728:web:33a3d9206029ef073ae465"
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-export const storage=getStorage(app);
 
 
 

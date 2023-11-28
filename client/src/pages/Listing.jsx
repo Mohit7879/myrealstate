@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { useState } from 'react'
-import {getStorage,ref, uploadBytesResumable,getDownloadURL} from 'firebase/storage'
+import {getStorage,ref, uploadBytes,getDownloadURL, uploadBytesResumable} from 'firebase/storage'
 import { app } from "../firebase";
 import {  useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom';
@@ -38,35 +38,38 @@ export default function Listing() {
     console.log(formData);
 
      const handleimageSubmit= async()=>{
-
+              console.log("image uploading");
           const storage=getStorage(app)
             const fileName= new Date().getTime()+file.name;
-            const storageRef = ref(storage,fileName);
-            const uploadTask = uploadBytesResumable(storageRef,fileName);
-        
-            uploadTask.on(
-               'state_changed',
-              (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-             
-              },
-              (error) => {
-                console.error(error,"firebase error");
-              },
-          () => {
-           
-           
-             // Upload complete
-                getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          
-              SetFormData({...formData,imageurls:formData.imageurls.concat(url)})
-                   
-                })
+            const storageRef = ref(storage,`image/${fileName}`);
+        const uploadTask=  uploadBytesResumable(storageRef,file)
 
+        uploadTask.on(
+            'state_changed',
+           (snapshot) => {
+             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          
+             
+           },
+           (error) => {
+             console.error(error,"firebase error");
+           },
+       () => {
+        
+        
+          // Upload complete
+             getDownloadURL(uploadTask.snapshot.ref).then((url) => {
               
-              
-      }
-      )
+               console.log( url)
+               SetFormData({...formData,imageurls:formData.imageurls.concat(url)})
+               // You can use 'url' to display the uploaded image or store it in a database.
+     })
+
+     console.log(formData);
+   }
+   )
+        
+   
            
          
       }
@@ -250,7 +253,7 @@ export default function Listing() {
 
     { formData.imageurls.map((url,index)=>(
        <div key={index}  className='flex justify-between '>
-        <img src={url} alt="image" />
+        <img  className=" h-66 w-66 object-cover" src={url} alt="image" />
        <button onClick={()=>handleRemoveImage(index)} type='button'className='p-3 text-orange-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-75'>delete</button>
        </div>
        ))}
