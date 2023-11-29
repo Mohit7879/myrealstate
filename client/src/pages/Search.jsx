@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
+import Listingcart from '../components/listingcart';
+import Listing from './Listing';
 
 
 export default function Search() {
@@ -19,12 +21,12 @@ export default function Search() {
         parking:false,
         furnished:false,
         offer:false,
-        sort:'createdAt_desc',
-        order:'',
+        sort:'created_at',
+        order:'desc',
 
     })
 
-   
+   console.log(sidebarData);
 
     const handleChange=(e)=>{
 
@@ -40,17 +42,15 @@ export default function Search() {
             setSidebarData({...sidebarData,[e.target.id]:e.target.checked})
         }
 
-        if(e.target.value==='regulaPrice_desc'||e.target.value==='regulaPrice_asc'){
-
+        if(e.target.id==='sort_order'){
+               
+            const sort=e.target.value.split('_')[0] || 'created_at';
+            const order=e.target.value.split('_')[1] || 'desc';
           
-            setSidebarData({...sidebarData,order:e.target.value,sort:""});
+            setSidebarData({...sidebarData,sort,order});
+         
         }
 
-        if(e.target.value==='createdAt_desc'||e.target.value==='createdAt_asc'){
-
-          
-            setSidebarData({...sidebarData,sort:e.target.value,order:""});
-        }
 
     }
 
@@ -66,7 +66,7 @@ export default function Search() {
         urlparams.set('sort',sidebarData.sort);
         urlparams.set('order',sidebarData.order);
         const searchQuery=urlparams.toString();
-        Navigate(`search${searchQuery}`)
+          Navigate(`/search?${searchQuery}`);
 
         
        
@@ -159,14 +159,28 @@ export default function Search() {
        </div>
        
        
+        <div className="flex-1" >
+            <h1 className='text3xl text-center font-semibold border-b-2 text-slate-700 mt-5'>Listing Result</h1>
+           <div>
+                  {!loading&&searchData.length===0&&(
+                   <p  className='text-xl text-center mt-28 text-slate-700'>No Result Found</p>
+                   )} 
+                   {loading&&<p className='text-xl text-center text-blue-700'>loading...</p>}
+                  
+            </div>
 
-      
-       
-       
+            <div className='flex flex-wrap'>
+            {
+                    !loading&&searchData&&searchData.map((listing)=>(
+                        <Listingcart  key={listing._id} listing={listing}/>
 
-      
-        <div className=""><h1 className='text3xl font-semibold border-b-2 text-slate-700 mt-5'>Listing Result:</h1> </div>
-      
+                    ))
+                   }
+            </div>
+
+
+        </div>
+              
     </div>
   )
 }
