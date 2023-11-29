@@ -9,6 +9,7 @@ export default function Search() {
     const Navigate=useNavigate();
     const [ loading,setloading]=useState(false)
     const [ searchData,setsearchData]=useState('');
+    const [ showmore,setshowmore]=useState(false);
 
     const search =useSelector(state=>state.search)
   
@@ -74,12 +75,33 @@ export default function Search() {
         const Query=urlparams.toString();
         const res=await fetch(`/api/listing/get?${Query}`);
         const data=await res.json();
-        console.log(data);
+         if(data.length>8){
+            setshowmore(true)
+         }
+        console.log(showmore);
         setsearchData(data);
         setloading(false);
 
         
 
+       }
+
+       const handleshowmore=async ()=>{
+
+        const numberoflisting=searchData.length
+        const startindex=numberoflisting;
+       const urlparams= new URLSearchParams(location.search)
+     
+       urlparams.set('startIndex',startindex);
+    
+       const searchquery=urlparams.toString();
+       console.log(searchquery,"params");
+       const res=await fetch(`/api/listing/get?${searchquery}`);
+       const data=await res.json();
+        if(data.length>8){
+           setshowmore(false)
+        }
+        setsearchData([...searchData,...data])
        }
 
 
@@ -178,8 +200,10 @@ export default function Search() {
                    }
             </div>
 
-
+           { showmore&&<button onClick={handleshowmore} className= ' text-green-600 hover:underline mx-4 rounded-lg'>show more</button> }
         </div>
+
+      
               
     </div>
   )

@@ -70,7 +70,7 @@ module.exports.getListing=async (req,res,next)=>{
 module.exports.searchListings=async (req,res,next)=>{
         
     try{
-   
+       
     const limit=parseInt(req.query.limit)||9;
     const startIndex=parseInt(req.query.startIndex)||0;
     let offer=req.query.offer;
@@ -102,7 +102,7 @@ module.exports.searchListings=async (req,res,next)=>{
 
     if(type===undefined|| type==='all'){
 
-        type={$in:['sale','all']};
+        type={$in:['all','sale']};
     }
 
     console.log(type);
