@@ -31,9 +31,7 @@ module.exports.createListing=async (req,res,next)=>{
       }
 
 
-    //   if(req.user.id!==Listing.userRef){
-    //     return next(errorhandler(401,'you can delete your own listing'));
-    // }
+    
 
     await Listing.findByIdAndDelete(req.params.id)
     console.log('deleted');
