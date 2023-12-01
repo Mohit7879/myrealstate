@@ -6,9 +6,9 @@ const cookieparser = require('cookie-parser');
 
 
 require('dotenv').config();
+console.log(process.env.MONGO);
 
-
-mongoose.connect(process.env.MONGO)
+mongoose.connect("mongodb+srv://mohityadav:kJUgEFqwrto0XUYW@realestatec.fupwuxe.mongodb.net/realestate?retryWrites=true&w=majority")
 .then(()=> {
     console.log("App is now connected to DB")
 }).catch((err)=> {

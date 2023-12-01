@@ -11,8 +11,9 @@ console.log("token",token);
 if(!token){
     return next(errorhandler(401,'unauthorised'))
 }else{
-    jwt.verify(token,process.env.JWT_SECRET,(err,user)=>{
+    jwt.verify(token,'mohit',(err,user)=>{
         if(err){
+            console.log(err);
                return next(errorhandler(403,'Forbidden'));
             }
 
