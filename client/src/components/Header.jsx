@@ -61,7 +61,7 @@ export default function Header() {
         </form>
 
         <ul className="flex gap-4">
-            <Link to='/'>  <li className="hover:underline"> Home</li></Link>
+            <Link to='/home'>  <li className="hover:underline"> Home</li></Link>
           <Link to='/about'>  <li  className="hover:underline">About</li></Link>
           {currentUser? <Link to='/profile'><li  className="hover:underline"><img  className="w-8 h-8 rounded-full "    src={currentUser.avatar} alt="profile"/></li></Link>:""}
          

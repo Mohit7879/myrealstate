@@ -20,17 +20,18 @@ export default function App() {
     <BrowserRouter>
     <Header />
     <Routes>
-      <Route path="/" element={<Home/>} />
+      <Route path="/" element={<Signup/>} />
       <Route path="/signin" element={<Signin/>} />
-      <Route path="/signup" element={<Signup/>} />
+    
+     
+   
+      <Route  element={<PrivateRoute/>} >
+      <Route path="/profile" element={<Profile/>} />
+         <Route path="/listing" element={<Listing/>} />
+         <Route path="/home" element={<Home/>} />
       <Route path="/about" element={<About/>} />
       <Route path="/search" element={<Search/>} />
       <Route path="/getlisting/:listingid" element={<Showlisting/>} />
-      <Route path="/profile" element={<Profile/>} />
-         <Route path="/listing" element={<Listing/>} />
-   
-      <Route  element={<PrivateRoute/>} >
-    
       </Route>
      
     </Routes>

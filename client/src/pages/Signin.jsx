@@ -49,7 +49,7 @@ const [formData, SetFormData]=useState({});
       return;
     }
    dispatch(signInSuccess(data))
-    navigate('/')
+    navigate('/home')
    
 
   }catch(err){
@@ -73,7 +73,7 @@ const [formData, SetFormData]=useState({});
 
         <div className="flex gap-3 mt-5">
           <p>Dont have an account ?</p>
-          <Link to={"/signup"}><span className="text-blue-700">Sign up</span> </Link>
+          <Link to={"/"}><span className="text-blue-700">Sign up</span> </Link>
 
         </div>
        { error&&<h1 className="text-red-500  "> ERROR <p1>{error}</p1></h1>}

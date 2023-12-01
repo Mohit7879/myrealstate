@@ -98,7 +98,7 @@ export default function Profile() {
       }
 
      dispatch(updateUserSuccess(data))
-     Navigate('/')
+     Navigate('/home')
    
       
       
