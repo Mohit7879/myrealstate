@@ -3,9 +3,9 @@ const { verifyToken } = require('../utils/verifyToken.js');
 
 const router=require('express').Router();
 
-router.post('/create',verifyToken,createListing)
-router.delete('/deletelist/:id',verifyToken,deleteList)
-router.get('/getlisting/:listingid',verifyToken,getListing)
-router.get('/get',verifyToken,searchListings)
+router.post('/create',createListing)
+router.delete('/deletelist/:id',deleteList)
+router.get('/getlisting/:listingid',getListing)
+router.get('/get',searchListings)
 
 module.exports=router;

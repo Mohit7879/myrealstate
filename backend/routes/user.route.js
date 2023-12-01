@@ -2,7 +2,7 @@ const { test1, updateUser, deleteUser, getuserlisting } = require('../controller
 const { verifyToken } = require('../utils/verifyToken.js');
 const router=require('express').Router();
 
-router.post('/update/:id',verifyToken,updateUser);
-router.delete('/delete/:id',verifyToken,deleteUser);
-router.get('/getlisting/:id',verifyToken, getuserlisting);
+router.post('/update/:id',updateUser);
+router.delete('/delete/:id',deleteUser);
+router.get('/getlisting/:id', getuserlisting);
 module.exports=router;
