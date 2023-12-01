@@ -26,10 +26,11 @@ export default function App() {
       <Route path="/about" element={<About/>} />
       <Route path="/search" element={<Search/>} />
       <Route path="/getlisting/:listingid" element={<Showlisting/>} />
-   
-      <Route  element={<PrivateRoute/>} >
       <Route path="/profile" element={<Profile/>} />
          <Route path="/listing" element={<Listing/>} />
+   
+      <Route  element={<PrivateRoute/>} >
+    
       </Route>
      
     </Routes>
