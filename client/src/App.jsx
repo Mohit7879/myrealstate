@@ -5,10 +5,10 @@ import Profile from './pages/Profile';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import Header from './components/Header';
-import About from './pages/about';
+import About from './pages/About';
 import PrivateRoute from './components/PrivateRoute';
 import Listing from './pages/Listing';
-import Showlisting from './pages/showlisting';
+import Showlisting from './pages/Showlisting';
 import Search from './pages/Search';
 
 
