@@ -67,6 +67,7 @@ module.exports.getListing=async (req,res,next)=>{
 
 module.exports.searchListings=async (req,res,next)=>{
         
+    console.log(req.query,"query");
     try{
        
     const limit=parseInt(req.query.limit)||9;
@@ -76,8 +77,7 @@ module.exports.searchListings=async (req,res,next)=>{
     if(offer===undefined||offer==='false'){
         offer={$in:[true,false]}
     }
-    console.log(offer);
-
+   
     let furnished=req.query.furnished;
 
     if(furnished===undefined||furnished==='false'){
@@ -100,7 +100,7 @@ module.exports.searchListings=async (req,res,next)=>{
 
     if(type===undefined|| type==='all'){
 
-        type={$in:['all','sale']};
+        type={$in:['rent','sale']};
     }
 
     console.log(type);
@@ -121,8 +121,9 @@ module.exports.searchListings=async (req,res,next)=>{
     }).sort({
         [sort]:order
     }).limit(limit).skip(startIndex);
-
+    console.log(listings);
     return res.status(200).json(listings);
+  
 
 
 

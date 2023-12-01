@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import {MdLocationOn} from 'react-icons/md'
 import {Swiper,SwiperSlide} from 'swiper/react';
 import SwiperCore from 'swiper'
 import { Navigation } from 'swiper/modules';
@@ -11,11 +12,11 @@ export default function Showlisting() {
     const [ listingData,setlistingData]=useState(null)
     const [ error,setError]=useState(false)
     const [loading,setloading]=useState(false)
-    const [price ,setPrice]=useState(null)
+  
 
     useEffect(()=>{
         const fetchListing=async ()=>{
-            console.log("inside listing");
+         
             try {
             setloading(true);
             const res =  await fetch(`/api/listing/getlisting/${params.listingid}`)
@@ -45,14 +46,9 @@ export default function Showlisting() {
     fetchListing()
     },[params.listingid])
   
-    if(listingData&&listingData.offer){
-
-        setPrice(listingData.regularPrice-listingData-discountPrice)
-
-    }
   return (
   
-    <main>
+    <main  >
 
    <p> {loading?'loading...':''}</p>
    
@@ -66,7 +62,7 @@ export default function Showlisting() {
         <SwiperSlide key={image}>
              <div
              
-             className='h-[550px]  '
+             className='h-[250px]  '
              style={{background:`url(${image}) center no-repeat  `, }}
              ></div>
         </SwiperSlide>
@@ -75,17 +71,32 @@ export default function Showlisting() {
     ))}
    </Swiper>
   }
+<div className='flex flex-col gap-2 max-w-5xl mx-auto'>
+<div>{listingData&&(  <p className='text-lg truncate font-semibold'>{listingData.name}</p>)}</div>
 
 
-      <div>{listingData&&(listingData.furnished?<h1>Furnished</h1>:""&&listingData.parking?<p>Parking</p>:"")}</div>
-     <div>{listingData&&(<p>{listingData.address}</p>)}</div>
-  {listingData&&(<p>{listingData.bedrooms}</p>)}
-  {listingData&&(<p>{listingData.bathrooms}</p>)}
-{listingData&&(<p>{listingData.description}</p>)} 
+    
+    
+     {listingData&&(<div className='flex items-center gap-1'>   < MdLocationOn className='h-4 w-4 text-red-400'/><p className='text-sm text-gray-600 truncate'>{listingData.address}</p></div>)}
+  {listingData&&(<div className='flex gap-3'>
+    <div className='flex gap-1'>
+    <p>{listingData.bedrooms}</p>
+    <p>bedroom</p>
+    </div>
 
- 
+    <div className='flex gap-1'>
+    <p>{listingData.bathrooms}</p>
+    <p>bathroom</p>
+    </div>
   
-   
+    <div>{listingData&&(listingData.furnished?<h1>Furnished</h1>:""&&listingData.parking?<p>Parking</p>:"")}</div>
+</div>)}
+  
+
+
+{listingData&&(<p>${listingData.offer?listingData.discountPrice.toLocaleString('en-US'):listingData.regularPrice.toLocaleString('en-US')}{listingData.type==='rent'?'/month':""}</p>)}
+{listingData&&(<p className='text-2xl text-gray-700 line-clamp-3'>{listingData.description}</p>)} 
+   </div>
   
  </main>
    

@@ -1,23 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import Listingcart from '../components/listingcart';
 import Listing from './Listing';
 
 
+
 export default function Search() {
+
+
     const Navigate=useNavigate();
     const [ loading,setloading]=useState(false)
     const [ searchData,setsearchData]=useState('');
     const [ showmore,setshowmore]=useState(false);
 
-    const search =useSelector(state=>state.search)
+    const {searchterm} =useSelector(state=>state.user)
   
-    
+  
 
     const [ sidebarData , setSidebarData]=useState({
 
-        searchTerm:'test',
+        searchTerm:searchterm,
         type:'all',
         parking:false,
         furnished:false,
@@ -28,6 +31,58 @@ export default function Search() {
     })
 
    console.log(sidebarData);
+
+   useEffect(()=>{
+  
+    const currentUrl = location.search;
+    const urlParams = new URLSearchParams(currentUrl);
+    const offer = urlParams.get('offer');
+    console.log(offer);
+    const seachterm = urlParams.get('searchTerm');
+    const type = urlParams.get('type');
+    const parking = urlParams.get('parking');
+    const furnished = urlParams.get('furnished');
+    const order = urlParams.get('order');
+    const sort = urlParams.get('sort');
+    console.log(seachterm);
+
+    if(
+        offer||seachterm||type||parking||furnished||order||sort
+    ){
+
+        console.log(type);
+        setSidebarData(
+            {
+                offer:offer==='true'?true:false,
+                parking:parking==='true'?true:false,
+                furnished:furnished==='true'?true:false,
+                searchTerm:seachterm||'',
+                type:type||'all',
+                sort:sort|| 'created_at',
+                order:order|| 'desc'
+
+            }
+        )
+    }
+
+
+    const fetchdata=async ()=>{
+        const query=urlParams.toString()
+        const res=await fetch(`/api/listing/get?${query}`);
+        const data=await res.json();
+         if(data.length>8){
+            setshowmore(true)
+         }
+        console.log(showmore);
+        setsearchData(data);
+        setloading(false);
+
+
+    }
+
+    fetchdata();
+    
+   },[location.search])
 
     const handleChange=(e)=>{
 
@@ -67,6 +122,7 @@ export default function Search() {
         urlparams.set('sort',sidebarData.sort);
         urlparams.set('order',sidebarData.order);
         const searchQuery=urlparams.toString();
+              console.log(searchQuery);
           Navigate(`/search?${searchQuery}`);
 
         

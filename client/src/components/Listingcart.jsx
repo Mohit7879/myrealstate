@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom'
 import {MdLocationOn} from 'react-icons/md'
 
 export default function Listingcart({listing}) {
+    console.log(listing);
    
   return (
-    <div className='m-5 w-[270px] bg-white flex flex-col gap-4 shadow-md hover:shadow-lg rounded-lg'><Link to={`/listing/${listing._id}`}>
+    <div className='m-5 w-[270px] bg-white flex flex-col gap-4 shadow-md hover:shadow-lg rounded-lg'><Link to={`/getlisting/${listing._id}`}>
 
         <img  className='h-[320px]  sm:h-[220px] w-[400px]  rounded-lg 'src={listing.imageurls[0]||'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fhouse%2F&psig=AOvVaw0uKRM2L1j8GmOhbRfUyjUG&ust=1701342433540000&source=images&cd=vfe&ved=0CBIQjRxqFwoTCNDjuNGI6YIDFQAAAAAdAAAAABAE'} alt="image" />
        

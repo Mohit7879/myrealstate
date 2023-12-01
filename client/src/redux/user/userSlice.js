@@ -4,11 +4,13 @@ const initialState={
     currentUser:null,
     error:null,
     loading:false,
+    searchterm:"",
+
     
 }
-const searchTerm={
-    searchTerm:""
-}
+
+  
+
 
 const userSlice = createSlice(
     {
@@ -84,6 +86,10 @@ const userSlice = createSlice(
                 state.loading=false;
             },
 
+            setsearchterm:(state,action)=>{
+                state.searchterm=action.payload;
+            }
+
 
 
           
@@ -101,5 +107,6 @@ export const {signinStart,
     deleteUserFailure,
      signoutSuccess,
      signoutFailure,
+     setsearchterm,
     }=userSlice.actions;
 export default userSlice.reducer

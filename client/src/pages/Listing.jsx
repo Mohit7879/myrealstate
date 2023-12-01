@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Listing() {
     const [file,setFile]= useState(undefined);
     const[loading , setLoading]=useState(false)
-    const[error , setError]=useState(null)
+    const[error , setError]=useState(undefined)
     const {currentUser}=useSelector(state=>state.user);
   const [message,setMessage]=useState('')
   const Navigate=useNavigate();
@@ -118,6 +118,9 @@ export default function Listing() {
         if(formData.regularPrice<formData.discountPrice){
             return setError('Regular price should be greater than Discounted Price ')
         }
+
+
+
      setMessage(null)
      setError(null)
     let data='';
@@ -145,13 +148,14 @@ export default function Listing() {
                   console.log(data);
                   if(data.success===false){
                     setError(data.message);
+                    console.log(error);
                  
                   }else{
                     setMessage("listing created successfully");
                   }
           
-               
-          Navigate(`/listing/${data._id}`)
+
+        
        
         }catch(err){
             
@@ -174,9 +178,9 @@ export default function Listing() {
     <h1 className='font-semibold text-center text-3xl my-7'>Create Listing</h1>
    <form className='flex flex-col sm:flex-row gap-4 '>
     <div className=' flex flex-col flex-1 gap-3'>
-        <input onChange={handlechange} value={formData.name } type='text' placeholder='Name' id='name' className='border p-3 rounded-lg' required></input>
-        <textarea  onChange={handlechange} value={formData.description } type='text' placeholder='Description' id='description' className='border p-3 rounded-lg'></textarea>
-        <input type='text'  onChange={handlechange} value={formData.address } placeholder='Address' id='address' className='border p-3 rounded-lg'></input>
+        <input onChange={handlechange}  value={formData.name } type='text' placeholder='Name' id='name' className='border p-3 rounded-lg' required={true}></input>
+        <textarea  onChange={handlechange} value={formData.description } type='text' placeholder='Description' id='description' className='border p-3 rounded-lg' required ></textarea>
+        <input type='text' onChange={handlechange} value={formData.address } placeholder='Address' id='address' className='border p-3 rounded-lg'  required></input>
 
                     <div className='flex flex-wrap gap-3'>
             <div className='flex gap-3 '> 

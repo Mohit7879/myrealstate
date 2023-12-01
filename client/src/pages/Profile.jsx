@@ -18,6 +18,7 @@ export default function Profile() {
   const [showListingError,setshowListingError]=useState(null)
   const [ showlisting,setshowlisting]=useState([]);
   const [image, setimage]=useState('');
+  const [emptylisting,setemptylisting]= useState(false);
   const Navigate=useNavigate();
 
   const dispatch=useDispatch();
@@ -171,9 +172,9 @@ export default function Profile() {
      
       const data= await res.json()
       setshowlisting(data);
-      console.log(showlisting.map((list)=>{
-        return list.imageurls[0]
-      }));
+       if(data.length===0){
+        setemptylisting(true);
+       }
       if(data.success==false){
         setshowListingError(true)
         return
@@ -226,7 +227,8 @@ export default function Profile() {
 
      {showListingError?<p>show listing error</p>:''}
      <button onClick={handleShowListings} className="text-green-700 cursor-pointer"> Show Listing</button>
-      <h1 className="text-center mt-7 font-semibold text-2xl ">Listings</h1>
+      <h1 className="text-center mt-7 font-semibold text-2xl ">My Listings</h1>
+      {emptylisting?'User has no listing':""}
       {showlisting&&showlisting.length&&
       
       showlisting.map((list)=>(
@@ -242,7 +244,7 @@ export default function Profile() {
      
          
       ))}
-     
+       
     </div>
   
     

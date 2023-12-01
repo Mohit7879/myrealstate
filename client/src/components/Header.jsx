@@ -2,13 +2,13 @@ import {FaSearch} from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import {  useDispatch,useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { setsearch } from "../redux/search/searchSlice.js";
+import { setsearchterm } from "../redux/user/userSlice.js";
 
 
 
 export default function Header() {
   const {currentUser}= useSelector((state)=>state.user);
-
+   
   const navigate=useNavigate()
   const dispatch=useDispatch();
  
@@ -25,7 +25,7 @@ export default function Header() {
       const urlparams= new URLSearchParams(window.location.search);
       urlparams.set('searchTerm',searchTerm);
       console.log(searchTerm);
-     dispatch(setsearch(searchTerm))
+     dispatch(setsearchterm(searchTerm))
       const searchQuery=urlparams.toString();
     
       navigate(`/search?${searchQuery}`);
@@ -48,7 +48,7 @@ export default function Header() {
     <header  className='bg-slate-200 '>
         <div className='flex justify-between  items-center max-w-6xl' >
         <h1 className='font-bold text-sm sm:text-xl flex '>
-             <span className='text-slate-500'>TheReal</span>
+             <span className='text-slate-500'>MyReal</span>
               <span className='text-slate-700'>Estate</span>
         </h1>
         <form  onSubmit={handleSubmit} className='p-3 rounded-lg flex items-center bg-slate-100' >
