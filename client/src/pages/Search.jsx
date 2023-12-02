@@ -102,7 +102,7 @@ export default function Search() {
                
             const sort=e.target.value.split('_')[0] || 'created_at';
             const order=e.target.value.split('_')[1] || 'desc';
-          
+             
             setSidebarData({...sidebarData,sort,order});
          
         }

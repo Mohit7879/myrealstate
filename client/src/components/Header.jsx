@@ -51,18 +51,18 @@ export default function Header() {
              <span className='text-slate-500'>MyReal</span>
               <span className='text-slate-700'>Estate</span>
         </h1>
-        <form  onSubmit={handleSubmit} className='p-3 rounded-lg flex items-center bg-slate-100' >
+        {  currentUser?<form  onSubmit={handleSubmit} className='p-3 rounded-lg flex items-center bg-slate-100' >
             
             <input value={searchTerm} onChange={(e)=>setsearchTerm(e.target.value)} type="text" placeholder='Search...' className='padding:10px focus:outline-none '/>
             <button>
             <FaSearch/>
             </button>
          
-        </form>
-
+        </form> :""}
+     
         <ul className="flex gap-4">
-            <Link to='/home'>  <li className="hover:underline"> Home</li></Link>
-          <Link to='/about'>  <li  className="hover:underline">About</li></Link>
+         {  currentUser? <Link to='/home'>  <li className="hover:underline"> Home</li></Link>:"" }
+         { currentUser? <Link to='/about'>  <li  className="hover:underline">About</li></Link>:""}
           {currentUser? <Link to='/profile'><li  className="hover:underline"><img  className="w-8 h-8 rounded-full "    src={currentUser.avatar} alt="profile"/></li></Link>:""}
          
         </ul>

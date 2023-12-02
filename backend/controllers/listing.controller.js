@@ -4,7 +4,7 @@ const { errorhandler } = require('../utils/error.js');
 module.exports.createListing=async (req,res,next)=>{
       let data=req.body.formData
         
-         console.log(req.body);
+       
     try {
 
         const listing = await Listing.create(req.body);
@@ -24,8 +24,7 @@ module.exports.createListing=async (req,res,next)=>{
      console.log(req.params.id);
 
       const listing=await Listing.findById(req.params.id)
-      console.log(listing);
-
+    
       if(!listing){
         return next(errorhandler(401,'listing not found'));
       }
@@ -34,10 +33,10 @@ module.exports.createListing=async (req,res,next)=>{
     
 
     await Listing.findByIdAndDelete(req.params.id)
-    console.log('deleted');
+   
          return res.status(200).json(listing)
     } catch (error) {
-        console.log(error);
+       
         next(error)
         
     }
@@ -46,10 +45,9 @@ module.exports.createListing=async (req,res,next)=>{
 module.exports.getListing=async (req,res,next)=>{
 
     try {
-
+      
      const getlisting=await Listing.findById(req.params.listingid)
-        console.log(req.params);
-  
+        
         if(!getlisting){
           return next(errorhandler(401,'listing not found'));
         }
@@ -94,7 +92,7 @@ module.exports.searchListings=async (req,res,next)=>{
         parking = { $in:[false,true]};
     }
 
-    console.log(parking);
+   
 
     let type=req.query.type;
 
@@ -103,14 +101,14 @@ module.exports.searchListings=async (req,res,next)=>{
         type={$in:['rent','sale']};
     }
 
-    console.log(type);
+   
 
     const searchTerm=req.query.searchTerm||'';
 
     const sort = req.query.sort||'createdAt';
 
     const order = req.query.order || 'desc';
-
+ 
     const listings = await Listing.find({
 
         name:{$regex : searchTerm , $options:'i'},

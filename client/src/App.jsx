@@ -10,25 +10,28 @@ import PrivateRoute from './components/PrivateRoute';
 import Listing from './pages/Listing';
 import Showlisting from './pages/Showlisting';
 import Search from './pages/Search';
+import { useSelector } from 'react-redux';
 
 
 
 export default function App() {
+
+  const {currentUser} = useSelector((state)=>state.user)
   return (
     <>
     
     <BrowserRouter>
     <Header />
     <Routes>
-      <Route path="/" element={<Signup/>} />
-      <Route path="/signin" element={<Signin/>} />
+      { currentUser?"": <Route path="/" element={<Signup/>} /> }
+    {   currentUser?"": <Route path="/signin" element={<Signin/>} />}
     
      
    
       <Route  element={<PrivateRoute/>} >
       <Route path="/profile" element={<Profile/>} />
          <Route path="/listing" element={<Listing/>} />
-         <Route path="/home" element={<Home/>} />
+        {currentUser? <Route path="/home" element={<Home/>} /> :""}
       <Route path="/about" element={<About/>} />
       <Route path="/search" element={<Search/>} />
       <Route path="/getlisting/:listingid" element={<Showlisting/>} />
